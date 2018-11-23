@@ -17,5 +17,23 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def update
+      @user = User.find(params[:id])
+      @user.update_attributes(user_params)
+      if @user.update_attributes(user_params)
+        redirect_to admin_user_path, :notice  => "Successfully updated user."
+      else
+        error_msg = @user.errors.full_messages[0]
+        redirect_to edit_admin_user_path, :notice => error_msg
+      end
+    end
+
+  private
+
+    def user_params
+      params.require(:user).permit(:name, :email)
+    end
+
   end
 end

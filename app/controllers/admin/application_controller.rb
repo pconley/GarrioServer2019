@@ -8,6 +8,14 @@ module Admin
   class ApplicationController < Administrate::ApplicationController
     before_action :authenticate_admin
 
+    def trace(*xs)
+      print "*** "
+      print *xs
+      puts ""
+      $stdout.flush
+    end
+
+
     def authenticate_admin
       redirect_to '/', alert: 'Not authorized.' unless user_signed_in? && current_user.admin?
     end
