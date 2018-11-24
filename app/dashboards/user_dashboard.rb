@@ -44,10 +44,12 @@ class UserDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
+    :id,
+    :name,
+    :email,
+    :admin,
     :notifications,
     :services,
-    :id,
-    :email,
     :encrypted_password,
     :reset_password_token,
     :reset_password_sent_at,
@@ -57,9 +59,7 @@ class UserDashboard < Administrate::BaseDashboard
     :last_sign_in_at,
     :current_sign_in_ip,
     :last_sign_in_ip,
-    :name,
     :announcements_last_read_at,
-    :admin,
     :created_at,
     :updated_at,
   ].freeze
@@ -68,22 +68,22 @@ class UserDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-		:password,
-    :notifications,
-    :services,
-    :email,
-    :encrypted_password,
-    :reset_password_token,
-    :reset_password_sent_at,
-    :remember_created_at,
-    :sign_in_count,
-    :current_sign_in_at,
-    :last_sign_in_at,
-    :current_sign_in_ip,
-    :last_sign_in_ip,
     :name,
-    :announcements_last_read_at,
+		:password,
+    :email,
     :admin,
+    # :notifications,
+    # :services,
+    # :encrypted_password,
+    # :reset_password_token,
+    # :reset_password_sent_at,
+    # :remember_created_at,
+    # :sign_in_count,
+    # :current_sign_in_at,
+    # :last_sign_in_at,
+    # :current_sign_in_ip,
+    # :last_sign_in_ip,
+    # :announcements_last_read_at,
   ].freeze
 
   # Overwrite this method to customize how users are displayed

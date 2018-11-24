@@ -20,8 +20,14 @@ module Admin
 
     def update
       @user = User.find(params[:id])
-      @user.update_attributes(user_params)
-      if @user.update_attributes(user_params)
+      user_values = user_params
+      if user_values['password'].blank?
+        # we do not require the password to be present.
+        # but we do not set a blank password which would
+        # fail the update attributes
+        user_values.delete('password')
+      end
+      if @user.update_attributes(user_values)
         redirect_to admin_user_path, :notice  => "Successfully updated user."
       else
         error_msg = @user.errors.full_messages[0]
@@ -32,7 +38,8 @@ module Admin
   private
 
     def user_params
-      params.require(:user).permit(:name, :email)
+      ud = UserDashboard.new
+      params.require(:user).permit(ud.form_attributes)
     end
 
   end

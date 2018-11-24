@@ -34,18 +34,24 @@ as well as a link to its edit page.
   </div>
 </header>
 
+<% fields = %i(name email password admin sign_in_count last_sign_in_at last_sign_in_ip) -%>
+
 <section class="main-content__body">
   <dl>
-    <% page.attributes.each do |attribute| %>
-      <dt class="attribute-label" id="<%= attribute.name %>">
-      <%= t(
-        "helpers.label.#{resource_name}.#{attribute.name}",
-        default: attribute.name.titleize,
-      ) %>
-      </dt>
 
-      <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
-          ><%= render_field attribute %></dd>
-    <% end %>
+    <% fields.each do |field| -%>
+      <% attr = page.attributes.select {|a| a.attribute == field}[0] -%>
+      <% if attr then -%>
+        <dt class="attribute-label" id="<%= attr.name %>">
+        <%= t(
+          "helpers.label.#{resource_name}.#{attr.name}",
+          default: attr.name.titleize,
+        ) %>
+        </dt>
+        <dd class="attribute-data attribute-data--<%=attr.html_class%>"
+            ><%= render_field attr %></dd>
+      <% end -%>
+    <% end -%>
+
   </dl>
 </section>
