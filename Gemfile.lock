@@ -104,6 +104,7 @@ GEM
     crass (1.0.4)
     data-confirm-modal (1.6.2)
       railties (>= 3.0)
+    database_cleaner (1.7.0)
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
     devise (4.4.3)
@@ -345,6 +346,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   colorize
   data-confirm-modal (~> 1.6.2)
+  database_cleaner
   devise (~> 4.4.3)
   devise-bootstrapped!
   devise_masquerade (~> 0.6.0)

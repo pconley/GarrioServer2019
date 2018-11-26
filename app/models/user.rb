@@ -8,4 +8,8 @@ class User < ApplicationRecord
 
   validates_length_of :name, minimum: 3, maximum: 10, allow_blank: true
 
+  def to_s
+    "User##{id} #{email}"
+  end
+
 end

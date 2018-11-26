@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :language do
-    name { "MyString" }
-    code { "MyString" }
-    image { "MyString" }
+    name { "pirate" }
+    code { "pr" }
+    image { nil }
   end
 end

@@ -80,3 +80,6 @@ group :development, :test do
   gem 'colorize'
   gem 'shiken', '~> 0.1.0'
 end
+group :test do
+  gem 'database_cleaner'
+end
