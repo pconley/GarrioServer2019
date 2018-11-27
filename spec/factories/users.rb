@@ -7,5 +7,11 @@ FactoryBot.define do
       "bot#{1000+n}@factory.com"
     end
     password { "password" }
+
+    # factory :admin do
+    #   admin { true }
+    #   password  {"administrator"}
+    # end
+    
   end
 end

@@ -5,5 +5,6 @@ FactoryBot.define do
       "admin#{2000+n}@factory.com"
     end
     password  {"administrator"}
+    admin { true }
   end
 end
