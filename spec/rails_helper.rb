@@ -31,7 +31,13 @@ RSpec.configure do |config|
   # Use the following instead if you are on Devise <= 4.1.1
   # config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
+
+
+  config.include RequestMacros, type: :request
+  config.include FactoryBot::Syntax::Methods
+
 end
+
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
