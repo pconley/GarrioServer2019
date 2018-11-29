@@ -1,17 +1,26 @@
 class Api::V1::LanguagesController < ApiController 
 
+    respond_to :json
+
     def index
         languages = Language.all
-        render json: {status: 'SUCCESS', message: 'Loaded all languages', data: languages}, status: :ok
+        respond(:ok,"Languages loaded",languages)
     end 
 
     def show
         language = Language.find(params[:id])
-        render json: {status: 'SUCCESS', message: 'Loaded language', data: language}, status: :ok
+        respond(:ok,"Language loaded",language)
     rescue ActiveRecord::RecordNotFound => e
-        render json: {
-          error: e.to_s
-        }, status: :not_found
+        respond(:not_found,"Language not found")
+        # render json: { status: 'ERROR', e.to_s }, status: :not_found
+    end
+
+private
+
+    def respond(status, message='', data=nil )
+        status_text = status == :ok ? 'SUCCESS' : 'ERROR'
+        # see serializer for the content that is rendered out
+        render json: {status: status_text, message: message, data: data}, status: status
     end
 
 end

@@ -33,6 +33,7 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
 
 
+  config.include ApiMacros, type: :request
   config.include RequestMacros, type: :request
   config.include FactoryBot::Syntax::Methods
 

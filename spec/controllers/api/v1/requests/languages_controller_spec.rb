@@ -2,55 +2,61 @@ require 'rails_helper'
 
 RSpec.describe 'Languages API', type: :request do
 
-  base_url = '/api/v1/languages'
-
   let!(:languages) { create_list(:language, 10) }
   let(:language_id) { languages.first.id }
 
+  # language_url = "#{V1_BASE_URL}/languages"
+
   describe 'GET /languages' do
+    before { get api_v1_languages_path }
 
-    before { get base_url }
-
-    # "status"=>"SUCCESS", "message"=>"Loaded all languages", "data"=>[{},...{}]
+    include_examples "index examples", 200
 
     it 'returns languages' do
-      # Note `json` is a custom helper to parse JSON responses
-      expect(json).not_to be_empty
-      puts json
-      expect(json['status']).to eq('SUCCESS')
-      expect(json['message']).to eq("Loaded all languages")
-      expect(json['data'].size).to eq(10)
-    end
-
-    it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      # expect(response.content_type).to eq("application/json")
+      # expect(response).to have_http_status(200)
+      body = JSON.parse(response.body)
+      # expect(body).not_to be_empty
+      status, message, data = parse(body)
+      expect(status).to eq(OK_STATUS)
+      expect(message).to match(/loaded/)
+      expect(data.size).to eq(10)
     end
   end
 
   describe 'GET /languages/:id' do
-    before { get "#{base_url}/#{language_id}" }
+
+    before { get api_v1_language_path(language_id) }
 
     context 'when the record exists' do
-      it 'returns the language' do
-        expect(json).not_to be_empty
-        puts json
-        expect(json['data']['id']).to eq(language_id)
-      end
 
-      it 'returns status code 200' do
-        expect(response).to have_http_status(200)
+      include_examples "index examples", 200
+
+      it 'returns the language' do
+        # expect(response).to have_http_status(200)
+        # expect(response.content_type).to eq("application/json")
+        body = JSON.parse(response.body)
+        # expect(body).not_to be_empty
+        status, message, data = parse(body)
+        expect(status).to eq(OK_STATUS)
+        expect(message).to match(/loaded/)
+        expect(data['id']).to eq(language_id)
       end
     end
 
     context 'when the record does not exist' do
       let(:language_id) { 100 }
 
-      it 'returns status code 404' do
-        expect(response).to have_http_status(404)
-      end
+      include_examples "index examples", 404
 
-      it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Language/)
+      it 'returns error information' do
+        # expect(response).to have_http_status(404)
+        body = JSON.parse(response.body)
+        # expect(body).not_to be_empty
+        status, message, data = parse(body)
+        expect(status).to eq(ERR_STATUS)
+        expect(message).to match(/not found/)
+        expect(data).to be_nil
       end
     end
   end
