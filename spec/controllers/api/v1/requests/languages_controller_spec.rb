@@ -2,62 +2,31 @@ require 'rails_helper'
 
 RSpec.describe 'Languages API', type: :request do
 
-  let!(:languages) { create_list(:language, 10) }
+  RECORD_COUNT = 10 
+  let!(:languages)  { create_list(:language, RECORD_COUNT) }
   let(:language_id) { languages.first.id }
-
-  # language_url = "#{V1_BASE_URL}/languages"
 
   describe 'GET /languages' do
     before { get api_v1_languages_path }
-
-    include_examples "index examples", 200
-
-    it 'returns languages' do
-      # expect(response.content_type).to eq("application/json")
-      # expect(response).to have_http_status(200)
-      body = JSON.parse(response.body)
-      # expect(body).not_to be_empty
-      status, message, data = parse(body)
-      expect(status).to eq(OK_STATUS)
-      expect(message).to match(/loaded/)
-      expect(data.size).to eq(10)
-    end
+    it_responds_like "a standard response", 200
+    it_responds_like "a standard index", RECORD_COUNT
   end
 
   describe 'GET /languages/:id' do
-
     before { get api_v1_language_path(language_id) }
-
     context 'when the record exists' do
-
-      include_examples "index examples", 200
-
-      it 'returns the language' do
-        # expect(response).to have_http_status(200)
-        # expect(response.content_type).to eq("application/json")
-        body = JSON.parse(response.body)
-        # expect(body).not_to be_empty
-        status, message, data = parse(body)
-        expect(status).to eq(OK_STATUS)
-        expect(message).to match(/loaded/)
-        expect(data['id']).to eq(language_id)
+      it_responds_like "a standard response", 200
+      it_responds_like "a standard show" do
+        let(:resource_id) { language_id }
       end
     end
 
     context 'when the record does not exist' do
-      let(:language_id) { 100 }
-
-      include_examples "index examples", 404
-
-      it 'returns error information' do
-        # expect(response).to have_http_status(404)
-        body = JSON.parse(response.body)
-        # expect(body).not_to be_empty
-        status, message, data = parse(body)
-        expect(status).to eq(ERR_STATUS)
-        expect(message).to match(/not found/)
-        expect(data).to be_nil
-      end
+      NON_EXISTENT_ID = 12345
+      # the followin let will alter the "before" above
+      let(:language_id) { NON_EXISTENT_ID } 
+      it_responds_like "a standard response", 404
+      it_responds_like "a standard show error"
     end
   end
 
