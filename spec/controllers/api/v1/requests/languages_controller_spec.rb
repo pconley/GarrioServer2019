@@ -16,8 +16,10 @@ RSpec.describe 'Languages API', type: :request do
   end
 
   describe 'GET /languages/:id' do
-    before { get api_v1_language_path(language_id) }
-    context 'when the record exists' do
+    before { get api_v1_language_path(search_key) }
+
+    context 'when the id exists' do
+      let(:search_key) { language_id }
       # it "responds" do puts response.body end
       it_responds_like "a standard response", 200
       it_responds_like "a standard show" do
@@ -26,17 +28,9 @@ RSpec.describe 'Languages API', type: :request do
       it_responds_with "only expected fields", %w[id name code]
     end
 
-    context 'when the record does not exist' do
-      # language_id will used in the "before" above
-      let(:language_id) { :language_code } # bad id
-      it_responds_like "a standard response", 404
-      it_responds_like "a standard show error"
-    end
-  end
-
-  describe 'GET /languages/:code' do
-    before { get api_v1_language_path(language_code) }
-    context 'when the record exists' do
+    context 'when the code exists' do
+      let(:search_key) { language_code }
+      # it "responds" do puts response.body end
       it_responds_like "a standard response", 200
       it_responds_like "a standard show" do
         let(:resource_id) { language_id }
@@ -44,9 +38,9 @@ RSpec.describe 'Languages API', type: :request do
       it_responds_with "only expected fields", %w[id name code]
     end
 
-    context 'when the record does not exist' do
-      # language_code will used in the "before" above
-      let(:language_code) { "99" } # bad code
+    context 'when the id/code does not exist' do
+      let(:search_key) { 123456 } # bad value
+      # it "responds" do puts response.body end
       it_responds_like "a standard response", 404
       it_responds_like "a standard show error"
     end

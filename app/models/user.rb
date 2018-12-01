@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :notifications, foreign_key: :recipient_id
   has_many :services
 
-  validates_length_of :name, minimum: 3, maximum: 10, allow_blank: true
+  validates_length_of :name, minimum: 3, maximum: 30, allow_blank: true
 
   def to_s
     "User##{id} #{email}"

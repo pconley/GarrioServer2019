@@ -8,9 +8,11 @@ class Api::V1::LanguagesController < ApiController
     end 
 
     def show
+        # search by id (the fastest)
         language = Language.find(params[:id])
         respond(:ok,"Language loaded by id",language)
     rescue ActiveRecord::RecordNotFound => e
+        # or search by code (slower)
         language = Language.find_by_code(params[:id])
         if language
             respond(:ok,"Language loaded by code",language)
