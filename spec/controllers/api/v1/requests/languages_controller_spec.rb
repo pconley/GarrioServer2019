@@ -28,7 +28,7 @@ RSpec.describe 'Languages API', type: :request do
 
     context 'when the record does not exist' do
       # language_id will used in the "before" above
-      let(:language_id) { 12345 } # bad id
+      let(:language_id) { :language_code } # bad id
       it_responds_like "a standard response", 404
       it_responds_like "a standard show error"
     end
