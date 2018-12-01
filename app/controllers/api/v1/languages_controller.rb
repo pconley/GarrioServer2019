@@ -9,25 +9,14 @@ class Api::V1::LanguagesController < ApiController
 
     def show
         language = Language.find(params[:id])
-        respond(:ok,"Language loaded",language)
+        respond(:ok,"Language loaded by id",language)
     rescue ActiveRecord::RecordNotFound => e
-        respond(:not_found,"Language not found")
-    end
-
-private
-
-    def respond(status, message='', data=nil )
-        if !data 
-            json = nil
-        elsif data.respond_to? :first
-            json = ActiveModel::Serializer::CollectionSerializer.new(data)
+        language = Language.find_by_code(params[:id])
+        if language
+            respond(:ok,"Language loaded by code",language)
         else
-            json = ActiveModel::Serializer::CollectionSerializer.new([data]).first
+            respond(:not_found,"Language #{params[:id]} not found")
         end
-        # puts "*** json = #{json.as_json}"
-        status_text = status == :ok ? 'SUCCESS' : 'ERROR'
-        # see serializer for the content that is rendered out
-        render json: {status: status_text, message: message, data: json}, status: status
     end
 
 end

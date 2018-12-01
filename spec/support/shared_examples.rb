@@ -43,6 +43,7 @@ end
 RSpec.shared_examples "a standard show error" do 
     it 'has a standard show error' do
         body = JSON.parse(response.body)
+        puts body
         expect(body['status']).to eq(ERR_STATUS)
         expect(body['message']).to match(/not found/)
         expect(body['data']).to be_nil
