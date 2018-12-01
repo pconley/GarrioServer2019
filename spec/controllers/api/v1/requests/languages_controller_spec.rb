@@ -4,10 +4,11 @@ RSpec.describe 'Languages API', type: :request do
 
   let!(:languages)  { create_list(:language, 10) }
   let(:language_id) { languages.first.id }
+  let(:language_code) { languages.first.code }
 
   describe 'GET /languages' do
     before { get api_v1_languages_path }
-    # it "responds" do puts response.body end
+    # it "responds" do puts response.bodyend
     it_responds_like "a standard response", 200
     it_responds_like "a standard index" do
       let(:resource_cnt) { languages.length }
@@ -28,6 +29,24 @@ RSpec.describe 'Languages API', type: :request do
     context 'when the record does not exist' do
       # language_id will used in the "before" above
       let(:language_id) { 12345 } # bad id
+      it_responds_like "a standard response", 404
+      it_responds_like "a standard show error"
+    end
+  end
+
+  describe 'GET /languages/:code' do
+    before { get api_v1_language_path(language_code) }
+    context 'when the record exists' do
+      it_responds_like "a standard response", 200
+      it_responds_like "a standard show" do
+        let(:resource_id) { language_id }
+      end
+      it_responds_with "only expected fields", %w[id name code]
+    end
+
+    context 'when the record does not exist' do
+      # language_code will used in the "before" above
+      let(:language_code) { "99" } # bad code
       it_responds_like "a standard response", 404
       it_responds_like "a standard show error"
     end

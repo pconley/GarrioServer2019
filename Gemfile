@@ -84,5 +84,6 @@ group :development, :test do
   gem 'shiken', '~> 0.1.0'
 end
 group :test do
+  gem 'faker'
   gem 'database_cleaner'
 end
