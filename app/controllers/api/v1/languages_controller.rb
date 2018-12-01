@@ -12,15 +12,22 @@ class Api::V1::LanguagesController < ApiController
         respond(:ok,"Language loaded",language)
     rescue ActiveRecord::RecordNotFound => e
         respond(:not_found,"Language not found")
-        # render json: { status: 'ERROR', e.to_s }, status: :not_found
     end
 
 private
 
     def respond(status, message='', data=nil )
+        if !data 
+            json = nil
+        elsif data.respond_to? :first
+            json = ActiveModel::Serializer::CollectionSerializer.new(data)
+        else
+            json = ActiveModel::Serializer::CollectionSerializer.new([data]).first
+        end
+        # puts "*** json = #{json.as_json}"
         status_text = status == :ok ? 'SUCCESS' : 'ERROR'
         # see serializer for the content that is rendered out
-        render json: {status: status_text, message: message, data: data}, status: status
+        render json: {status: status_text, message: message, data: json}, status: status
     end
 
 end

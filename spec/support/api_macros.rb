@@ -5,13 +5,13 @@ ERR_STATUS = "ERROR"
   
 module ApiMacros
 
-    def json
-        JSON.parse(response.body)
-    end
+    # def json
+    #     JSON.parse(response.body)
+    # end
 
-    def parse(jdata)
-        return jdata['status'],jdata['message'],jdata['data']
-    end
+    # def parse(jdata)
+    #     return jdata['status'],jdata['message'],jdata['data']
+    # end
       
     # def login_admin
     #     before(:each) do

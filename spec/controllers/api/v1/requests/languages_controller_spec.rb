@@ -2,29 +2,32 @@ require 'rails_helper'
 
 RSpec.describe 'Languages API', type: :request do
 
-  RECORD_COUNT = 10 
-  let!(:languages)  { create_list(:language, RECORD_COUNT) }
+  let!(:languages)  { create_list(:language, 10) }
   let(:language_id) { languages.first.id }
 
   describe 'GET /languages' do
     before { get api_v1_languages_path }
+    # it "responds" do puts response.body end
     it_responds_like "a standard response", 200
-    it_responds_like "a standard index", RECORD_COUNT
+    it_responds_like "a standard index" do
+      let(:resource_cnt) { languages.length }
+    end
   end
 
   describe 'GET /languages/:id' do
     before { get api_v1_language_path(language_id) }
     context 'when the record exists' do
+      # it "responds" do puts response.body end
       it_responds_like "a standard response", 200
       it_responds_like "a standard show" do
         let(:resource_id) { language_id }
       end
+      it_responds_with "only expected fields", %w[id name code]
     end
 
     context 'when the record does not exist' do
-      NON_EXISTENT_ID = 12345
-      # the followin let will alter the "before" above
-      let(:language_id) { NON_EXISTENT_ID } 
+      # language_id will used in the "before" above
+      let(:language_id) { 12345 } # bad id
       it_responds_like "a standard response", 404
       it_responds_like "a standard show error"
     end
