@@ -7,4 +7,7 @@ class Language < ApplicationRecord
 
     validates_length_of :code, minimum: 2, maximum: 2, allow_blank: false
 
+    # has_many :users
+    has_many :natives, foreign_key: "native_id", class_name: "User"
+
 end

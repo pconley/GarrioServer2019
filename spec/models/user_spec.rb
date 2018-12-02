@@ -39,17 +39,13 @@ RSpec.describe User, type: :model do
     expect(described_class.count).to eq(1)
   end
 
-  # it "can have a native language" do
-  #   puts subject.inspect
-  #   n1 = FactoryBot.create(:language)
-  #   puts n1.inspect
-  #   subject.native_id = n1.id
-  #   puts subject.inspect
-  #   subject.save
-  #   puts subject.native_language.inspect
-  #   expect(subject.save).to eq(true)
-  #   expect(described_class.count).to eq(1)
-  # end
+  it "can be listed as a native speaker" do
+    subject.save!
+    # puts subject.inspect
+    # puts @native.inspect
+    # puts "natives = #{@native.natives.count}"
+    expect(@native.natives.count).to eq(1)
+  end
 
   ### VERiFY WE HAVE BOTS
 
