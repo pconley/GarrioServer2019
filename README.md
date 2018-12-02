@@ -4,6 +4,9 @@
 
 # Schema
 
+user
+language
+
 # Key Technologies
 
 * Ruby on Rails5
