@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Restart Notes
 
-Things you may want to cover:
+# Schema
 
-* Ruby version
+# Key Technologies
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Ruby on Rails5
+* used jumpstart for init
+* not "api only" setup
+* Adiminstrate (for static pages)
+* Devise for authorization
+* Postgres for the database
+* Rspec & Postman for testing
+* Faker & FactoryBot for testing
+* Shiken?

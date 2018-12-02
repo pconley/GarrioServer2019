@@ -1,5 +1,19 @@
 
-use faker
-postman setup
-first api controller
+
+basic webpack javascript page
+give user a native language
+save to github
+
+=== done ===
+
+postman setup for localhost
+use faker for test data
+basic get user api
+first api controller (language)
 get rspec working
+active admin w/ devise
+
+=== model ===
+
+language
+users (has a native language)

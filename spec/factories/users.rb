@@ -6,6 +6,8 @@ FactoryBot.define do
     name { Faker::Name.name }
     password { "password" }
 
+    association :native_language, factory: :language
+
     # admin is a user with the flag set and we also
     # give the test admin a different password
     factory :admin do

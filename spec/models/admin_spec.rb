@@ -4,7 +4,11 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  subject { described_class.new(email: "xxx@xxx.xxx", password: "password", admin: true) }
+  before(:each) do
+    @native = FactoryBot.create(:language)
+  end
+
+  subject { described_class.new(email: "xxx@xxx.xxx", password: "password", native_language: @native, admin: true) }
 
   it "is valid with valid attributes" do
     expect(subject).to be_valid
