@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_02_132746) do
+ActiveRecord::Schema.define(version: 2018_12_02_211421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,18 @@ ActiveRecord::Schema.define(version: 2018_12_02_132746) do
     t.string "notifiable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ranks", force: :cascade do |t|
+    t.integer "level"
+    t.bigint "user_id"
+    t.bigint "language_id"
+    t.datetime "ranked_at"
+    t.text "admin_notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language_id"], name: "index_ranks_on_language_id"
+    t.index ["user_id"], name: "index_ranks_on_user_id"
   end
 
   create_table "services", force: :cascade do |t|

@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_many :notifications, foreign_key: :recipient_id
   has_many :services
+  has_many :ranks
 
   belongs_to :native_language, class_name: "Language", foreign_key: 'native_id'
 
